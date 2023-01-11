@@ -18,6 +18,9 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { CreateItemArgs } from "./CreateItemArgs";
+import { UpdateItemArgs } from "./UpdateItemArgs";
 import { DeleteItemArgs } from "./DeleteItemArgs";
 import { ItemFindManyArgs } from "./ItemFindManyArgs";
 import { ItemFindUniqueArgs } from "./ItemFindUniqueArgs";
@@ -75,6 +78,43 @@ export class ItemResolverBase {
       return null;
     }
     return result;
+  }
+
+  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @graphql.Mutation(() => Item)
+  @nestAccessControl.UseRoles({
+    resource: "Item",
+    action: "create",
+    possession: "any",
+  })
+  async createItem(@graphql.Args() args: CreateItemArgs): Promise<Item> {
+    return await this.service.create({
+      ...args,
+      data: args.data,
+    });
+  }
+
+  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @graphql.Mutation(() => Item)
+  @nestAccessControl.UseRoles({
+    resource: "Item",
+    action: "update",
+    possession: "any",
+  })
+  async updateItem(@graphql.Args() args: UpdateItemArgs): Promise<Item | null> {
+    try {
+      return await this.service.update({
+        ...args,
+        data: args.data,
+      });
+    } catch (error) {
+      if (isRecordNotFoundError(error)) {
+        throw new apollo.ApolloError(
+          `No resource was found for ${JSON.stringify(args.where)}`
+        );
+      }
+      throw error;
+    }
   }
 
   @graphql.Mutation(() => Item)

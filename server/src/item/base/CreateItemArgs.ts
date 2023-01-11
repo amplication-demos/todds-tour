@@ -9,22 +9,13 @@ https://docs.amplication.com/how-to/custom-code
 
 ------------------------------------------------------------------------------
   */
-import { InputType, Field } from "@nestjs/graphql";
-import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional } from "class-validator";
+import { ArgsType, Field } from "@nestjs/graphql";
+import { ItemCreateInput } from "./ItemCreateInput";
 
-@InputType()
-class ItemUpdateInput {
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  name?: string;
+@ArgsType()
+class CreateItemArgs {
+  @Field(() => ItemCreateInput, { nullable: false })
+  data!: ItemCreateInput;
 }
 
-export { ItemUpdateInput };
+export { CreateItemArgs };
