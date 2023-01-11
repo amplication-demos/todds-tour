@@ -50,7 +50,6 @@ export class ItemControllerBase {
       select: {
         createdAt: true,
         id: true,
-        name: true,
         updatedAt: true,
       },
     });
@@ -73,7 +72,6 @@ export class ItemControllerBase {
       select: {
         createdAt: true,
         id: true,
-        name: true,
         updatedAt: true,
       },
     });
@@ -97,7 +95,6 @@ export class ItemControllerBase {
       select: {
         createdAt: true,
         id: true,
-        name: true,
         updatedAt: true,
       },
     });
@@ -130,7 +127,6 @@ export class ItemControllerBase {
         select: {
           createdAt: true,
           id: true,
-          name: true,
           updatedAt: true,
         },
       });
@@ -162,7 +158,6 @@ export class ItemControllerBase {
         select: {
           createdAt: true,
           id: true,
-          name: true,
           updatedAt: true,
         },
       });
