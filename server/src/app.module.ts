@@ -3,9 +3,11 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 import { MorganInterceptor, MorganModule } from "nest-morgan";
 import { UserModule } from "./user/user.module";
 import { OrderModule } from "./order/order.module";
+import { ItemModule } from "./item/item.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
 import { HealthModule } from "./health/health.module";
+import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { ServeStaticModule } from "@nestjs/serve-static";
@@ -17,9 +19,11 @@ import { GraphQLModule } from "@nestjs/graphql";
   imports: [
     UserModule,
     OrderModule,
+    ItemModule,
     ACLModule,
     AuthModule,
     HealthModule,
+    PrismaModule,
     SecretsManagerModule,
     MorganModule,
     ConfigModule.forRoot({ isGlobal: true }),

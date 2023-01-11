@@ -27,3 +27,9 @@ model Order {
   totalCost  Float
   updatedAt  DateTime @updatedAt
 }
+
+model Item {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
